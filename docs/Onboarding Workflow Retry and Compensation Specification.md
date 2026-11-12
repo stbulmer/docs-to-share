@@ -1,4 +1,4 @@
-Onboarding Workflow: Retry and Compensation Specification
+# Onboarding Workflow: Retry and Compensation Specification
 
 If a failure might be fixed by retrying, keep what was created and fix forward. Only compensate once a request is finally abandoned (cancelled, rejected, or past the agreed retry window). Undo runs in reverse order of creation.
 
