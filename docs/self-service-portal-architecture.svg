@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440" role="img" aria-labelledby="t d">
-  <title id="t">Target architecture: one contract, three surfaces, one API</title>
-  <desc id="d">A service owner publishes a contract to the registry. The portal, CLI and agents all read that contract and call the same consolidated API, which holds all the logic.</desc>
+  <title id="t">Target architecture: one contract, two clients, agents on the CLI</title>
+  <desc id="d">A service owner publishes a contract to the registry. The portal and the CLI read that contract and call the same consolidated API, which holds all the logic. Agents invoke CLI commands.</desc>
   <defs>
     <style>
       .bg{fill:#f6f8fa;stroke:#d0d7de}
@@ -39,17 +39,17 @@
   </g>
 
   <!-- Surfaces -->
-  <rect class="box srf" x="540" y="50" width="160" height="80" rx="12"/>
-  <text class="h" x="620" y="86" text-anchor="middle">Portal</text>
-  <text class="s" x="620" y="108" text-anchor="middle">generic renderer</text>
+  <rect class="box srf" x="540" y="40" width="160" height="80" rx="12"/>
+  <text class="h" x="620" y="76" text-anchor="middle">Portal</text>
+  <text class="s" x="620" y="98" text-anchor="middle">generic renderer</text>
 
-  <rect class="box srf" x="540" y="180" width="160" height="80" rx="12"/>
-  <text class="h" x="620" y="216" text-anchor="middle">CLI</text>
-  <text class="s" x="620" y="238" text-anchor="middle">command groups</text>
+  <rect class="box srf" x="540" y="170" width="160" height="80" rx="12"/>
+  <text class="h" x="620" y="206" text-anchor="middle">CLI</text>
+  <text class="s" x="620" y="228" text-anchor="middle">command groups</text>
 
-  <rect class="box srf" x="540" y="310" width="160" height="80" rx="12"/>
-  <text class="h" x="620" y="346" text-anchor="middle">Agents</text>
-  <text class="s" x="620" y="368" text-anchor="middle">intents and tools</text>
+  <rect class="box srf" x="540" y="320" width="160" height="80" rx="12" stroke-dasharray="6 4"/>
+  <text class="h" x="620" y="356" text-anchor="middle">Agents</text>
+  <text class="s" x="620" y="378" text-anchor="middle">consumer of the CLI</text>
 
   <!-- API -->
   <rect class="box api" x="790" y="130" width="150" height="180" rx="12"/>
@@ -61,15 +61,16 @@
   <path class="flow pub" d="M200 210 H266" marker-end="url(#aP)"/>
   <text class="lbl" x="233" y="198" text-anchor="middle">publish</text>
 
-  <path class="flow read" d="M460 190 C500 190 500 90 536 90" marker-end="url(#aB)"/>
-  <path class="flow read" d="M460 210 H536" marker-end="url(#aB)"/>
-  <path class="flow read" d="M460 230 C500 230 500 350 536 350" marker-end="url(#aB)"/>
-  <text class="lbl" x="498" y="268" text-anchor="middle" fill="#0969da" style="fill:#0969da">read</text>
+  <path class="flow read" d="M460 190 C500 190 500 80 536 80" marker-end="url(#aB)"/>
+  <path class="flow read" d="M460 215 C500 215 500 210 536 210" marker-end="url(#aB)"/>
+  <text class="lbl" x="498" y="258" text-anchor="middle" style="fill:#0969da">read</text>
 
-  <path class="flow call" d="M700 90 C750 90 750 170 786 170" marker-end="url(#aO)"/>
-  <path class="flow call" d="M700 220 H786" marker-end="url(#aO)"/>
-  <path class="flow call" d="M700 350 C750 350 750 270 786 270" marker-end="url(#aO)"/>
-  <text class="lbl" x="745" y="204" text-anchor="middle" style="fill:#bc4c00">call</text>
+  <path class="flow call" d="M700 80 C750 80 750 170 786 170" marker-end="url(#aO)"/>
+  <path class="flow call" d="M700 210 C750 210 750 250 786 250" marker-end="url(#aO)"/>
+  <text class="lbl" x="745" y="150" text-anchor="middle" style="fill:#bc4c00">call</text>
+
+  <path class="flow pub" d="M620 318 V254" marker-end="url(#aP)"/>
+  <text class="lbl" x="632" y="292" style="fill:#8250df">invoke commands</text>
 
   <text class="s" x="480" y="425" text-anchor="middle">No surface gates a rollout: a capability ships when its API contract exists.</text>
 </svg>

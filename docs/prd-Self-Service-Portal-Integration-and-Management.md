@@ -22,7 +22,7 @@ Engineers who cannot find an answer are routed by the Slack bot to operations st
 
 - A service owner can publish and change an offering, its forms, its instructional text and its news without work from the portal team.
 - An engineer lands on a home page organized by decision and reaches the right next step in one click.
-- The portal, the CLI and agents all read the same contract, so a capability appears on every surface when its API ships.
+- The portal and the CLI both read the same contract, and agents use the CLI, so a capability appears on every surface when its API ships.
 - News, roadmap and release content become a first-class part of the portal, owned by the teams that ship the changes.
 - Standards are enforced by automated guardrails at publish time, with no manual review queue.
 
@@ -39,15 +39,16 @@ Engineers who cannot find an answer are routed by the Slack bot to operations st
 2. **The contract is led by the shared metadata API.** All public cloud already shares one metadata API. The offering contract extends that capability, and the portal conforms to it. The portal does not define its own contract.
 3. **Service owners own their contract and content.** Fields, help text, docs and announcements are theirs to change at any time.
 4. **Every surface is a client, and no surface gates a rollout.** A capability ships when its API contract exists. This applies to the CLI as much as to the portal.
+   Agents are not a third, parallel client. They consume the CLI. A command is a compact, self-describing call, so agents spend far fewer tokens than they would loading per-offering tool schemas, and the CLI's help is the one place agents learn what exists. Agent support lives on the consumer side and needs no separate integration track.
 5. **Guardrails are built in.** Anything that would have been a review comment becomes an automated check with a clear error.
-6. **One vocabulary across surfaces.** Learn, Get access (Onboard or Order) and Manage name the portal's entry points, the CLI's command groups and the agent's intents.
+6. **One vocabulary across surfaces.** Learn, Get access (Onboard or Order) and Manage name the portal's entry points, the CLI's command groups. Agents use the same command groups through the CLI.
 7. **Organize by decision, not by type of thing.** Categories are a filter inside the catalog.
 
 ## At a glance
 
-![Target architecture: one contract, three surfaces, one API](self-service-portal-architecture.svg)
+![Target architecture: one contract, two clients, agents on the CLI](self-service-portal-architecture.svg)
 
-The owner publishes once. The portal, CLI and agents read the same contract and call the same API, which holds all the logic.
+The owner publishes once. The portal and the CLI read the same contract and call the same API, which holds all the logic. Agents invoke CLI commands instead of calling the API or loading per-offering tool definitions, which keeps token spend low.
 
 ## Users and their journeys
 
@@ -86,7 +87,7 @@ Every offering page is generated from the owner's contract, so the catalog is as
 | LEARN-4 | The category taxonomy spans public and private cloud and reflects current offerings | P0 |
 | LEARN-5 | Each offering page shows its recent news and upcoming roadmap items | P1 |
 | LEARN-6 | Legacy ticket-backed offerings are listed with a legacy label and a pointer to the modern alternative where one exists | P1 |
-| LEARN-7 | The same catalog is available through the API for the CLI and agents | P0 |
+| LEARN-7 | The same catalog is available through the API for the CLI, and so for agents using the CLI | P0 |
 
 ## Capability 3: Get access
 
@@ -101,7 +102,7 @@ Get access offers two actions and explains the difference with examples, because
 | --- | --- | --- |
 | ACCESS-1 | Get access shows Onboard and Order side by side with a one-line description and an example of each | P0 |
 | ACCESS-2 | Each offering declares its access type in its contract, so the engineer is routed to the right action from the offering page | P0 |
-| ACCESS-3 | Onboard pages show the CLI command and an agent prompt, ready to copy, beside any rendered form | P0 |
+| ACCESS-3 | Onboard pages show the CLI command and an agent prompt that invokes that command, ready to copy, beside any rendered form | P0 |
 | ACCESS-4 | Forms for both actions are rendered from the owner's form schema. The portal adds no fields and no rules | P0 |
 | ACCESS-5 | Order pages show expected lead time and whether a consultation is required, as declared by the owner | P0 |
 | ACCESS-6 | Lifecycle actions beyond access, including offboarding, use the same schema-driven mechanism | P0 |
@@ -117,7 +118,7 @@ Manage shows what the tenant has and links to where it is operated. It does not 
 | MANAGE-2 | Each item deep-links to the console or tool where it is managed | P0 |
 | MANAGE-3 | An activity history shows actions taken for the tenant, built from real events such as access grants and Terraform runs | P0 |
 | MANAGE-4 | The order-style ID is retired. Activity entries are identified by the event and resource they describe | P0 |
-| MANAGE-5 | Activity history is the same whether the action came from the portal, the CLI or an agent | P1 |
+| MANAGE-5 | Activity history is the same whether the action came from the portal, the CLI or an agent using the CLI | P1 |
 | MANAGE-6 | Open Order requests show status and owner contact | P1 |
 
 ## Capability 5: What's new, roadmap and releases
@@ -132,7 +133,7 @@ The portal becomes the place to learn what changed and what is coming, across ev
 | NEWS-4 | A roadmap view shows upcoming items by expected period, as stated by each owner | P1 |
 | NEWS-5 | Engineers receive notifications for offerings their tenant uses, and can follow others | P1 |
 | NEWS-6 | Items past their stated period are flagged to the owner to update or close | P1 |
-| NEWS-7 | The feed is available through the API for the CLI and agents | P1 |
+| NEWS-7 | The feed is available through the API for the CLI, and so for agents using the CLI | P1 |
 
 ## Capability 6: Service owner admin
 
@@ -148,7 +149,7 @@ The current "add a service" form grows into an admin area where an owner runs th
 | ADMIN-6 | An owner manages docs, news and roadmap items for the offering in the same place | P0 |
 | ADMIN-7 | An owner assigns co-maintainers from their team | P1 |
 | ADMIN-8 | A scorecard shows contract completeness, doc freshness and stale roadmap items | P1 |
-| ADMIN-9 | An owner sees usage of the offering by client: portal, CLI and agent | P1 |
+| ADMIN-9 | An owner sees usage of the offering by client: portal, CLI and agent-driven CLI use | P1 |
 | ADMIN-10 | Offerings that outgrow generic rendering can host their own page built on the portal design system | P2 |
 
 ## Capability 7: Offering contract and schemas
@@ -157,10 +158,10 @@ The contract is the product. It extends the shared metadata API and is the singl
 
 | Part of the contract | Contents | Used by |
 | --- | --- | --- |
-| Identity | Name, owning team, support route, category, cloud, lifecycle | Catalog, search, agents |
+| Identity | Name, owning team, support route, category, cloud, lifecycle | Catalog, search, CLI, agents via the CLI |
 | Access | Access type (Onboard or Order), lead time, consultation required | Get access routing |
-| Actions | For each lifecycle action (onboard, order, change, offboard): the API endpoint and its input schema | Forms, CLI, agent tools |
-| Presentation | Labels, help text, field order and grouping for each input | Forms, CLI help, agent tool descriptions |
+| Actions | For each lifecycle action (onboard, order, change, offboard): the API endpoint and its input schema | Forms, CLI commands |
+| Presentation | Labels, help text, field order and grouping for each input | Forms, CLI help (which agents read) |
 | Docs | How-to document and links | Learn, Slack bot, vector store |
 | Announcements | Release, upcoming and deprecation items | What's new, roadmap |
 
@@ -168,7 +169,7 @@ The contract is the product. It extends the shared metadata API and is the singl
 | --- | --- | --- |
 | CONTRACT-1 | The contract schema is defined as an extension of the shared metadata API and owned by the API team | P0 |
 | CONTRACT-2 | Input schemas for actions are derived from the API's own payload definitions, so form and API cannot drift | P0 |
-| CONTRACT-3 | Instructional text is stored once in the contract and reused by the portal, CLI help and agent tool descriptions | P0 |
+| CONTRACT-3 | Instructional text is stored once in the contract and reused by the portal and CLI help, which agents read through the CLI | P0 |
 | CONTRACT-4 | Lifecycle actions use a common set of verbs across all offerings | P0 |
 | CONTRACT-5 | The contract schema is versioned, and changes to it are backward compatible | P0 |
 | CONTRACT-6 | The contract supports declarative resources, including a reference to a Terraform module or provider where one exists | P1 |
@@ -180,11 +181,11 @@ A configuration management layer replaces the static site. The API team owns the
 
 | ID | Requirement | Priority |
 | --- | --- | --- |
-| BACKEND-1 | A contract registry stores published contracts and serves them to the portal, CLI and agents | P0 |
+| BACKEND-1 | A contract registry stores published contracts and serves them to the portal and the CLI | P0 |
 | BACKEND-2 | A generic renderer turns any valid contract into an offering page and its forms, with no per-offering code | P0 |
 | BACKEND-3 | The portal calls the consolidated API only. Direct calls from portal code to provider or external APIs are removed | P0 |
 | BACKEND-4 | The portal passes the user's session identity to the API on every call | P0 |
-| BACKEND-5 | Every API call carries a client identifier (portal, CLI, agent) for usage measurement | P0 |
+| BACKEND-5 | Every API call carries a client identifier (portal or CLI) for usage measurement, and the CLI marks calls made by an agent so agent-driven use can be counted separately | P0 |
 | BACKEND-6 | Existing frozen onboarding flows keep working against the backward-compatible endpoints until their offering moves to the contract | P0 |
 | BACKEND-7 | The portal design system (styles and components) is published for use by owner-hosted pages | P2 |
 | BACKEND-8 | Contract changes emit events that the vector store and Slack bot can consume | P2 |
@@ -212,7 +213,7 @@ Baselines and targets are open and need to be set from current data.
 | --- | --- | --- |
 | Integration lead time: contract submitted to live on the portal | Whether the portal still gates rollout | Contract registry |
 | Share of offering changes published without portal team work | Whether owners are self-sufficient | Contract registry, portal team backlog |
-| API usage by client (portal, CLI, agent) | Where to invest in each surface | API metrics |
+| API usage by client (portal, CLI, agent-driven CLI) | Where to invest in each surface | API metrics |
 | Offerings on the contract, of all listed | Coverage of the new model | Contract registry |
 | Onboarding and how-to questions reaching operations | Whether docs and clearer journeys deflect support | Slack bot, ops channels |
 | News and roadmap items published per offering | Whether What's new is alive | Contract registry |
