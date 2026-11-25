@@ -39,7 +39,7 @@ Engineers who cannot find an answer are routed by the Slack bot to operations st
 2. **The contract is led by the shared metadata API.** All public cloud already shares one metadata API. The offering contract extends that capability, and the portal conforms to it. The portal does not define its own contract.
 3. **Service owners own their contract and content.** Fields, help text, docs and announcements are theirs to change at any time.
 4. **Every surface is a client, and no surface gates a rollout.** A capability ships when its API contract exists. This applies to the CLI as much as to the portal.
-   Agents are not a third, parallel client. They consume the CLI. A command is a compact, self-describing call, so agents spend far fewer tokens than they would loading per-offering tool schemas, and the CLI's help is the one place agents learn what exists. Agent support lives on the consumer side and needs no separate integration track.
+   Agents are not a third, parallel client. They consume the CLI, which is the easiest interface for an agent to use: commands are familiar, discoverable through help, and follow one vocabulary, so an agent can find and run the right command without custom tool definitions per offering. Lower token spend follows, because a command is a compact call and the agent loads no per-offering tool schemas. Agent support lives on the consumer side and needs no separate integration track.
 5. **Guardrails are built in.** Anything that would have been a review comment becomes an automated check with a clear error.
 6. **One vocabulary across surfaces.** Learn, Get access (Onboard or Order) and Manage name the portal's entry points, the CLI's command groups. Agents use the same command groups through the CLI.
 7. **Organize by decision, not by type of thing.** Categories are a filter inside the catalog.
@@ -48,7 +48,7 @@ Engineers who cannot find an answer are routed by the Slack bot to operations st
 
 ![Target architecture: one contract, two clients, agents on the CLI](self-service-portal-architecture.svg)
 
-The owner publishes once. The portal and the CLI read the same contract and call the same API, which holds all the logic. Agents invoke CLI commands instead of calling the API or loading per-offering tool definitions, which keeps token spend low.
+The owner publishes once. The portal and the CLI read the same contract and call the same API, which holds all the logic. Agents use the CLI, which is the easiest interface for them to drive, instead of calling the API or loading per-offering tool definitions. This also keeps token spend low.
 
 ## Users and their journeys
 

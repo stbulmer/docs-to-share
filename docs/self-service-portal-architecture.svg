@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440" role="img" aria-labelledby="t d">
   <title id="t">Target architecture: one contract, two clients, agents on the CLI</title>
-  <desc id="d">A service owner publishes a contract to the registry. The portal and the CLI read that contract and call the same consolidated API, which holds all the logic. Agents invoke CLI commands.</desc>
+  <desc id="d">A service owner publishes a contract to the registry. The portal and the CLI read that contract and call the same consolidated API, which holds all the logic. Agents use the CLI, a simple interface they already know how to drive.</desc>
   <defs>
     <style>
       .bg{fill:#f6f8fa;stroke:#d0d7de}
@@ -10,6 +10,7 @@
       .s{font:13px system-ui,-apple-system,Segoe UI,sans-serif;fill:#57606a}
       .lbl{font:600 12px system-ui,-apple-system,Segoe UI,sans-serif;fill:#57606a}
       .flow{fill:none;stroke-width:2.5;stroke-dasharray:8 8;animation:dash 1.2s linear infinite}
+      .dot{fill:none;stroke:#8250df;stroke-width:3;stroke-dasharray:1 7;stroke-linecap:round}
       .read{stroke:#0969da}.call{stroke:#bc4c00}.pub{stroke:#8250df}
       @keyframes dash{to{stroke-dashoffset:-16}}
       .pulse{animation:pulse 3s ease-in-out infinite}
@@ -49,7 +50,7 @@
 
   <rect class="box srf" x="540" y="320" width="160" height="80" rx="12" stroke-dasharray="6 4"/>
   <text class="h" x="620" y="356" text-anchor="middle">Agents</text>
-  <text class="s" x="620" y="378" text-anchor="middle">consumer of the CLI</text>
+  <text class="s" x="620" y="378" text-anchor="middle">easy to drive</text>
 
   <!-- API -->
   <rect class="box api" x="790" y="130" width="150" height="180" rx="12"/>
@@ -69,8 +70,8 @@
   <path class="flow call" d="M700 210 C750 210 750 250 786 250" marker-end="url(#aO)"/>
   <text class="lbl" x="745" y="150" text-anchor="middle" style="fill:#bc4c00">call</text>
 
-  <path class="flow pub" d="M620 318 V254" marker-end="url(#aP)"/>
-  <text class="lbl" x="632" y="292" style="fill:#8250df">invoke commands</text>
+  <path class="dot" d="M620 318 V254" marker-end="url(#aP)"/>
+  <text class="lbl" x="632" y="292" style="fill:#8250df">uses the CLI</text>
 
   <text class="s" x="480" y="425" text-anchor="middle">No surface gates a rollout: a capability ships when its API contract exists.</text>
 </svg>
