@@ -45,7 +45,7 @@ Engineers who cannot find an answer are routed by the Slack bot to operations st
 
 ## At a glance
 
-*Diagram: target architecture · contract, three surfaces, one API.*
+![Target architecture: one contract, three surfaces, one API](self-service-portal-architecture.svg)
 
 The owner publishes once. The portal, CLI and agents read the same contract and call the same API, which holds all the logic.
 
@@ -239,11 +239,10 @@ Phases 4 and 5 depend only on phase 1 and can run in parallel with 2 and 3.
 
 **Open questions**
 
-- [ ] Does the shared metadata API cover private cloud offerings today, or only public cloud?
-- [ ] Who owns and staffs the renderer: portal backend engineers, the API team, or both?
-- [ ] What prevents the portal from passing the session identity today, and does the fix need a security review?
-- [ ] What are the baseline lead times for the stuck flows, including dates for the May offboarding case?
-- [ ] Has change management confirmed that nothing depends on the order-style ID?
-- [ ] Which usage thresholds from the experimental CLI release decide whether portal onboarding forms stay?
-- [ ] Do engineers understand Onboard versus Order as labeled, or does it need testing with a few users?
-- [ ] Which common lifecycle verbs apply to every offering?
+- [x] **Does the shared metadata API cover private cloud offerings today, or only public cloud?** It covers public cloud onboarding. The private cloud solution has a similar BOM API, so the contract needs to bridge or align the two.
+- [x] **Who owns and staffs the renderer?** The portal team may own it, with assistance from the API team. The portal team is believed to have the backend support it needs.
+- [ ] **Why can the portal not pass the session identity today, and does the fix need a security review?** The cause is unclear. The better question may be why it is not passed at all, given the API fulfills the rest of the payload on submission. Passing it could be solved together with the renderer schema.
+- [x] **What are the baseline lead times for the stuck flows, including the May offboarding case?** Each case took months of collaboration, followed by new emergent requirements at every cycle. Exact dates are not needed: the pattern is the evidence.
+- [x] **Has change management confirmed that nothing depends on the order-style ID?** Nothing depends on it for decommissioning or for modifying configurations, so it can be retired.
+- [ ] **Do engineers understand Onboard versus Order as labeled?** This needs validation with a few users. More distinct terms are welcome, so alternatives should be tested alongside the current labels.
+- [ ] **Which common lifecycle verbs apply to every offering?**

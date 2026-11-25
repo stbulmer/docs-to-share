@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440" role="img" aria-labelledby="t d">
+  <title id="t">Target architecture: one contract, three surfaces, one API</title>
+  <desc id="d">A service owner publishes a contract to the registry. The portal, CLI and agents all read that contract and call the same consolidated API, which holds all the logic.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f6f8fa;stroke:#d0d7de}
+      .box{fill:#fff;stroke-width:2}
+      .own{stroke:#8250df}.reg{stroke:#0969da}.srf{stroke:#1a7f37}.api{stroke:#bc4c00}
+      .h{font:600 17px system-ui,-apple-system,Segoe UI,sans-serif;fill:#1f2328}
+      .s{font:13px system-ui,-apple-system,Segoe UI,sans-serif;fill:#57606a}
+      .lbl{font:600 12px system-ui,-apple-system,Segoe UI,sans-serif;fill:#57606a}
+      .flow{fill:none;stroke-width:2.5;stroke-dasharray:8 8;animation:dash 1.2s linear infinite}
+      .read{stroke:#0969da}.call{stroke:#bc4c00}.pub{stroke:#8250df}
+      @keyframes dash{to{stroke-dashoffset:-16}}
+      .pulse{animation:pulse 3s ease-in-out infinite}
+      @keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+      @media (prefers-reduced-motion:reduce){.flow,.pulse{animation:none}}
+    </style>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8250df"/></marker>
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0969da"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#bc4c00"/></marker>
+  </defs>
+
+  <rect class="bg" x="1" y="1" width="958" height="438" rx="14"/>
+
+  <!-- Owner -->
+  <rect class="box own" x="30" y="165" width="170" height="90" rx="12"/>
+  <text class="h" x="115" y="202" text-anchor="middle">Service owner</text>
+  <text class="s" x="115" y="224" text-anchor="middle">publishes once</text>
+  <text class="s" x="115" y="241" text-anchor="middle">guardrails at publish</text>
+
+  <!-- Registry -->
+  <g class="pulse">
+    <rect class="box reg" x="270" y="150" width="190" height="120" rx="12"/>
+    <text class="h" x="365" y="188" text-anchor="middle">Offering contract</text>
+    <text class="s" x="365" y="212" text-anchor="middle">identity · access type</text>
+    <text class="s" x="365" y="230" text-anchor="middle">actions · forms · docs</text>
+    <text class="s" x="365" y="248" text-anchor="middle">news · versioned registry</text>
+  </g>
+
+  <!-- Surfaces -->
+  <rect class="box srf" x="540" y="50" width="160" height="80" rx="12"/>
+  <text class="h" x="620" y="86" text-anchor="middle">Portal</text>
+  <text class="s" x="620" y="108" text-anchor="middle">generic renderer</text>
+
+  <rect class="box srf" x="540" y="180" width="160" height="80" rx="12"/>
+  <text class="h" x="620" y="216" text-anchor="middle">CLI</text>
+  <text class="s" x="620" y="238" text-anchor="middle">command groups</text>
+
+  <rect class="box srf" x="540" y="310" width="160" height="80" rx="12"/>
+  <text class="h" x="620" y="346" text-anchor="middle">Agents</text>
+  <text class="s" x="620" y="368" text-anchor="middle">intents and tools</text>
+
+  <!-- API -->
+  <rect class="box api" x="790" y="130" width="150" height="180" rx="12"/>
+  <text class="h" x="865" y="205" text-anchor="middle">Consolidated</text>
+  <text class="h" x="865" y="227" text-anchor="middle">API</text>
+  <text class="s" x="865" y="252" text-anchor="middle">all the logic</text>
+
+  <!-- Flows -->
+  <path class="flow pub" d="M200 210 H266" marker-end="url(#aP)"/>
+  <text class="lbl" x="233" y="198" text-anchor="middle">publish</text>
+
+  <path class="flow read" d="M460 190 C500 190 500 90 536 90" marker-end="url(#aB)"/>
+  <path class="flow read" d="M460 210 H536" marker-end="url(#aB)"/>
+  <path class="flow read" d="M460 230 C500 230 500 350 536 350" marker-end="url(#aB)"/>
+  <text class="lbl" x="498" y="268" text-anchor="middle" fill="#0969da" style="fill:#0969da">read</text>
+
+  <path class="flow call" d="M700 90 C750 90 750 170 786 170" marker-end="url(#aO)"/>
+  <path class="flow call" d="M700 220 H786" marker-end="url(#aO)"/>
+  <path class="flow call" d="M700 350 C750 350 750 270 786 270" marker-end="url(#aO)"/>
+  <text class="lbl" x="745" y="204" text-anchor="middle" style="fill:#bc4c00">call</text>
+
+  <text class="s" x="480" y="425" text-anchor="middle">No surface gates a rollout: a capability ships when its API contract exists.</text>
+</svg>
